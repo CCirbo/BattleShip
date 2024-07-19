@@ -20,11 +20,7 @@ RSpec.configure do |config|
     end
 
     it 'will be instantiated with a fired_upon attribute seet to false' do
-
-    end
-
-    it 'will return state of fired_upon attribute' do
-
+      expect(@cell.fired_upon).to eq(false)
     end
   end
 
@@ -50,21 +46,37 @@ RSpec.configure do |config|
       expect(@cell.empty?).to eq(false)
     end
   end
+  
+  describe "#fired_upon?" do
+    it 'will return state of fired_upon attribute' do
+      expect(@cell.fired_upon?).to eq(false)
+    end
+  end
 
   describe "#fire_upon" do
     it 'will update the status of fired_upon attribute' do
+      expect(@cell.fired_upon).to eq(false)
+      @cell.fire_upon
 
+      expect(@cell.fired_upon).to eq(true)
     end
-
+    
     it 'will NOT revert status of fired_upon from true to false' do
+      @cell.fire_upon
+      expect(@cell.fired_upon).to eq(true)
+      @cell.fire_upon
 
+      expect(@cell.fired_upon).not_to eq(false)
     end
-
+    
     it 'will update ship health if cell is occupied' do
-
+      @cell.place_ship(@cruiser)
+      @cell.fire_upon
+      
+      expect(@cell.ship.health).to eq(2)
     end
-
-  end
+  
+end
 
   describe "#render()" do
 
