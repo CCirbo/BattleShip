@@ -71,14 +71,31 @@ RSpec.configure do |config|
     
     it 'will update ship health if cell is occupied' do
       @cell.place_ship(@cruiser)
+      expect(@cell.fired_upon).to eq(false)
       @cell.fire_upon
       
       expect(@cell.ship.health).to eq(2)
+      expect(@cell.fired_upon).to eq(true)
     end
   
 end
 
   describe "#render()" do
+    it 'will return the string "." if the cell has not been fired upon' do
+      
+    end
+
+    it 'will return the string "M" if the cell has been fired upon and it does not contain a ship' do
+      
+    end
+
+    it 'will return the string "H" if the cell has  been fired upon and it contains a ship' do
+      
+    end
+
+    it 'will return the string "X" if the cell has been fired upon and its ship has been sunk' do
+      
+    end
 
   end
 
