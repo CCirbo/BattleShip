@@ -82,19 +82,30 @@ end
 
   describe "#render()" do
     it 'will return the string "." if the cell has not been fired upon' do
-      
+      #require"pry";binding.pry
+      expect(@cell.render).to eq(".")
     end
 
     it 'will return the string "M" if the cell has been fired upon and it does not contain a ship' do
-      
+      @cell.fire_upon
+
+      expect(@cell.render).to eq("M")
     end
 
     it 'will return the string "H" if the cell has  been fired upon and it contains a ship' do
-      
+      @cell.place_ship(@cruiser)
+      @cell.fire_upon
+
+      expect(@cell.render).to eq("H")
     end
 
     it 'will return the string "X" if the cell has been fired upon and its ship has been sunk' do
-      
+      @cell.place_ship(@cruiser)
+      3.times do
+        @cell.fire_upon
+      end
+
+      expect(@cell.render).to eq("X")
     end
 
   end
