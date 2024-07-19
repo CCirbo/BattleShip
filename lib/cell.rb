@@ -28,18 +28,22 @@ class Cell
     @fired_upon = true
   end
 
-  def render
-    if @ship != nil
-      if @ship.sunk?
-        "X"
-      else 
-        "H"
-      end
-    else
-      if self.fired_upon?
-        "M"
+  def render(user = false)
+    if user == false
+       "."
+    else 
+      if @ship != nil
+        if @ship.sunk?
+          "X"
+        else 
+          "H"
+        end
       else
-        "."
+        if self.fired_upon?
+          "M"
+        else
+          "."
+        end
       end
     end
   end
