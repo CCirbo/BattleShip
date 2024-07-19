@@ -19,7 +19,7 @@ RSpec.configure do |config|
       expect(@cell.coordinate).to eq("B4")
     end
 
-    it 'will be instantiated with a fired_upon attribute seet to false' do
+    it 'will be instantiated with a fired_upon attribute set to false' do
       expect(@cell.fired_upon).to eq(false)
     end
   end
