@@ -10,13 +10,21 @@ RSpec.configure do |config|
     @cruiser = Ship.new("Cruiser", 3)
   end
 
-  describe "#initalize" do
+  describe "#initalize()" do
     it "can exist" do
       expect(@cell).to be_a(Cell)
     end
 
     it "has a coordinate" do
       expect(@cell.coordinate).to eq("B4")
+    end
+
+    it 'will be instantiated with a fired_upon attribute seet to false' do
+
+    end
+
+    it 'will return state of fired_upon attribute' do
+
     end
   end
 
@@ -42,4 +50,24 @@ RSpec.configure do |config|
       expect(@cell.empty?).to eq(false)
     end
   end
+
+  describe "#fire_upon" do
+    it 'will update the status of fired_upon attribute' do
+
+    end
+
+    it 'will NOT revert status of fired_upon from true to false' do
+
+    end
+
+    it 'will update ship health if cell is occupied' do
+
+    end
+
+  end
+
+  describe "#render()" do
+
+  end
+
 end
