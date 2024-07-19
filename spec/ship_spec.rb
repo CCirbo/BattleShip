@@ -6,26 +6,26 @@ RSpec.configure do |config|
 
  RSpec.describe Ship do 
   before(:each) do 
-    @cruiser = Ship.new("Cruiser", 3)
+    @cruiser = Ship.new('Cruiser', 3)
   end
 
-  describe "#initialize" do
-    it "exists" do
+  describe '#initialize' do
+    it 'exists' do
       expect(@cruiser).to be_a(Ship)
     end
 
-    it "has attributes" do
-      expect(@cruiser.name).to eq("Cruiser")
+    it 'has attributes' do
+      expect(@cruiser.name).to eq('Cruiser')
       expect(@cruiser.length).to eq(3)
     end
 
-    it "has a health equal to length" do
+    it 'has a health equal to length' do
       expect(@cruiser.health).to eq(3)
     end
   end
 
-  describe "#sunk" do
-    it "can show ship not sunk is false by default" do
+  describe '#sunk' do
+    it 'can show ship not sunk is false by default' do
       expect(@cruiser.sunk?).to eq(false)
     end
 
