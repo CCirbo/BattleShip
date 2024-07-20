@@ -27,24 +27,16 @@ class Cell
     end
     @fired_upon = true
   end
-
-  def render(user = false)
-    if user == false
-       "."
-    else 
-      if @ship != nil
-        if @ship.sunk?
-          "X"
-        else 
-          "H"
-        end
-      else
-        if self.fired_upon?
-          "M"
-        else
-          "."
-        end
-      end
+  
+  def render(show_ship = false)
+    if @fired_upon
+      return "M" if empty?
+      return "X" if @ship.sunk?
+      return "H" if !empty?
+    elsif show_ship && !empty?
+      "S"
+    else
+      "."
     end
   end
 

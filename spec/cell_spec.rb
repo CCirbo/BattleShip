@@ -4,10 +4,12 @@ RSpec.configure do |config|
  config.formatter = :documentation 
  end
 
- RSpec.describe Cell do 
+RSpec.describe Cell do 
   before(:each) do 
-    @cell = Cell.new('B4')
-    @cruiser = Ship.new('Cruiser', 3)
+    @cell = Cell.new("B4")
+    @cell_1 = Cell.new("A2")
+    @cell_2 = Cell.new("C3")
+    @cruiser = Ship.new("Cruiser", 3)
   end
 
   describe '#initalize()' do
@@ -17,10 +19,6 @@ RSpec.configure do |config|
 
     it 'has a coordinate' do
       expect(@cell.coordinate).to eq('B4')
-    end
-
-    it 'will be instantiated with a fired_upon attribute set to false' do
-      expect(@cell.fired_upon).to eq(false)
     end
   end
 
@@ -48,13 +46,13 @@ RSpec.configure do |config|
   end
   
   describe '#fired_upon?' do
-    it 'will return state of fired_upon attribute' do
+    it 'has fired_upon? assigned false by default' do
       expect(@cell.fired_upon?).to eq(false)
     end
   end
 
   describe '#fire_upon' do
-    it 'will update the status of fired_upon attribute' do
+    it 'will update ship health if ship has been fired upon' do
       expect(@cell.fired_upon).to eq(false)
       @cell.fire_upon
 
@@ -77,41 +75,47 @@ RSpec.configure do |config|
       expect(@cell.ship.health).to eq(2)
       expect(@cell.fired_upon).to eq(true)
     end
-  
-end
-
-  describe '#render()' do
-
-    it 'will will return the string "." when arg is set to default false value' do
-      expect(@cell.render).to eq('.')
-    end
-
-    it 'will return the string "." if the cell has not been fired upon' do
-      expect(@cell.render(true)).to eq('.')
-    end
-
-    it 'will return the string "M" if the cell has been fired upon and it does not contain a ship' do
-      @cell.fire_upon
-
-      expect(@cell.render(true)).to eq('M')
-    end
-
-    it 'will return the string "H" if the cell has  been fired upon and it contains a ship' do
-      @cell.place_ship(@cruiser)
-      @cell.fire_upon
-
-      expect(@cell.render(true)).to eq('H')
-    end
-
-    it 'will return the string "X" if the cell has been fired upon and its ship has been sunk' do
-      @cell.place_ship(@cruiser)
-      3.times do
-        @cell.fire_upon
-      end
-
-      expect(@cell.render(true)).to eq('X')
-    end
-
   end
 
+  describe '#render board()' do
+    it 'shows the string "." as default' do
+      expect(@cell_1.render).to eq(".")
+    end
+
+    it 'changes "." to "M" if fired upon and contains no ships' do
+      expect(@cell_1.render).to eq(".")
+      @cell_1.fire_upon
+      expect(@cell_1.render).to eq("M")
+    end
+
+    it 'shows the string "H" if cell has been fired upon and it contains a ship' do
+      @cell_1.place_ship(@cruiser)
+      @cell_1.fire_upon
+      expect(@cell_1.render).to eq("H")
+    end
+
+    it 'shows the string "X" if cell has been fired upon and ship has sunk' do
+      @cell_1.place_ship(@cruiser)
+      @cell_1.fire_upon
+      expect(@cell_1.render).to eq("H")
+      2.times do
+        @cell_1.fire_upon
+      end
+      expect(@cruiser.sunk?).to eq(true)
+      expect(@cell_1.render).to eq("X")
+   end
+  
+    it 'shows ship placement on board when show ship render is true' do
+      expect(@cell_2.render).to eq(".")
+      @cell_2.place_ship(@cruiser)
+      expect(@cell_2.render(true)).to eq("S")
+    end
+
+    it 'does not show ship placement on board if show ship render is false' do
+      expect(@cell_2.render).to eq(".")
+      @cell_2.place_ship(@cruiser)
+      expect(@cell_2.render(false)).to eq(".")
+    end
+  end
 end
+
