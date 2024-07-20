@@ -60,37 +60,47 @@ RSpec.describe Cell do
       expect(@cell.ship.health).to eq(2)
       expect(@cell.fired_upon).to eq(true)
     end
-  
-end
-
-  describe "#render()" do
-    it 'will return the string "." if the cell has not been fired upon' do
-      #require"pry";binding.pry
-      expect(@cell.render).to eq(".")
-    end
-
-    it 'will return the string "M" if the cell has been fired upon and it does not contain a ship' do
-      @cell.fire_upon
-
-      expect(@cell.render).to eq("M")
-    end
-
-    it 'will return the string "H" if the cell has  been fired upon and it contains a ship' do
-      @cell.place_ship(@cruiser)
-      @cell.fire_upon
-
-      expect(@cell.render).to eq("H")
-    end
-
-    it 'will return the string "X" if the cell has been fired upon and its ship has been sunk' do
-      @cell.place_ship(@cruiser)
-      3.times do
-        @cell.fire_upon
-      end
-
-      expect(@cell.render).to eq("X")
-    end
-
   end
 
+  describe "#render board()" do
+    it 'shows the string "." as default' do
+      expect(@cell_1.render).to eq(".")
+    end
+
+    it 'changes "." to "M" if fired upon and contains no ships' do
+      expect(@cell_1.render).to eq(".")
+      @cell_1.fire_upon
+      expect(@cell_1.render).to eq("M")
+    end
+
+    it 'shows the string "H" if cell has been fired upon and it contains a ship' do
+      @cell_1.place_ship(@cruiser)
+      @cell_1.fire_upon
+      expect(@cell_1.render).to eq("H")
+    end
+
+    it 'shows the string "X" if cell has been fired upon and ship has sunk' do
+      @cell_1.place_ship(@cruiser)
+      @cell_1.fire_upon
+      expect(@cell_1.render).to eq("H")
+      2.times do
+        @cell_1.fire_upon
+      end
+      expect(@cruiser.sunk?).to eq(true)
+      expect(@cell_1.render).to eq("X")
+   end
+  
+    it 'shows ship placement on board when show ship render is true' do
+      expect(@cell_2.render).to eq(".")
+      @cell_2.place_ship(@cruiser)
+      expect(@cell_2.render(true)).to eq("S")
+    end
+
+    it 'does not show ship placement on board if show ship render is false' do
+      expect(@cell_2.render).to eq(".")
+      @cell_2.place_ship(@cruiser)
+      expect(@cell_2.render(false)).to eq(".")
+    end
+  end
 end
+
