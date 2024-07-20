@@ -6,7 +6,7 @@ RSpec.configure do |config|
 
  RSpec.describe Ship do 
   before(:each) do 
-    @cruiser = Ship.new("Cruiser", 3)
+    @cruiser = Ship.new('Cruiser', 3)
   end
 
   describe '#initialize' do
@@ -15,7 +15,7 @@ RSpec.configure do |config|
     end
 
     it 'has attributes' do
-      expect(@cruiser.name).to eq("Cruiser")
+      expect(@cruiser.name).to eq('Cruiser')
       expect(@cruiser.length).to eq(3)
     end
 

@@ -27,28 +27,7 @@ class Cell
     end
     @fired_upon = true
   end
-
-  # def render
-  #   if @ship != nil
-  #     if @ship.sunk?
-  #       "X"
-  #     else 
-  #       "H"
-  #     end
-  #   else
-  #     if self.fired_upon?
-  #       "M"
-  #     else
-  #       "."
-  #     end
-  #   end
-  # end
-
-  # def fire_upon
-  #   @fired_upon = true
-  #   @ship.hit unless empty?
-  # end
-
+  
   def render(show_ship = false)
     if @fired_upon
       return "M" if empty?

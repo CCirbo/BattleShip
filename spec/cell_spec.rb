@@ -1,4 +1,4 @@
-require "spec_helper"
+require 'spec_helper'
 
 RSpec.configure do |config| 
  config.formatter = :documentation 
@@ -18,12 +18,12 @@ RSpec.describe Cell do
     end
 
     it 'has a coordinate' do
-      expect(@cell.coordinate).to eq("B4")
+      expect(@cell.coordinate).to eq('B4')
     end
   end
 
   describe '#cell status' do
-    it "checks if a cell can hold a ship" do
+    it 'checks if a cell can hold a ship' do
       expect(@cell.ship).to eq(nil)
     end 
 
@@ -53,6 +53,21 @@ RSpec.describe Cell do
 
   describe '#fire_upon' do
     it 'will update ship health if ship has been fired upon' do
+      expect(@cell.fired_upon).to eq(false)
+      @cell.fire_upon
+
+      expect(@cell.fired_upon).to eq(true)
+    end
+    
+    it 'will NOT revert status of fired_upon from true to false' do
+      @cell.fire_upon
+      expect(@cell.fired_upon).to eq(true)
+      @cell.fire_upon
+
+      expect(@cell.fired_upon).to eq(true)
+    end
+    
+    it 'will update ship health if cell is occupied' do
       @cell.place_ship(@cruiser)
       expect(@cell.fired_upon).to eq(false)
       @cell.fire_upon
