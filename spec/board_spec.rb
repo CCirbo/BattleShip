@@ -76,14 +76,15 @@ RSpec.describe Board do
     expect(@board.valid_placement?(@submarine, ["C1", "B1"])).to eq(false)
     expect(@board.valid_placement?(@submarine, ["B1", "C1"])).to eq(true)
   end
-
-  xit 'can place a ship on the board' do
-    @board.place_ship(@cruiser, ["A1", "A2", "A3"])
-    expect(@board.cells["A1"].ship).to eq(@cruiser)
-    expect(@board.cells["A2"].ship).to eq(@cruiser)
-    expect(@board.cells["A3"].ship).to eq(@cruiser)
-
+  describe '#place_ship()' do 
+    it 'can place a ship on the board' do
+        @board.place_ship(@cruiser, ["A1", "A2", "A3"])
+        expect(@board.cells["A1"].ship).to eq(@cruiser)
+        expect(@board.cells["A2"].ship).to eq(@cruiser)
+        expect(@board.cells["A3"].ship).to eq(@cruiser)
+    end
   end
+
 
   xit 'can check if ships are overlapping' do
     @board.place_ship(@cruiser, ["A1", "A2", "A3"])
