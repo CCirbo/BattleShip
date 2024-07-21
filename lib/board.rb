@@ -28,6 +28,10 @@ class Board
         end
     end
 
+    def valid_length?(ship, coordinate_array)
+        coordinate_array.length == ship.length ? true : false
+    end
+
     def transform_coordinate_array(coordinate_array)
         numeric_coordinates = coordinate_array.map do |cell|
             numeric = []
@@ -35,10 +39,6 @@ class Board
             numeric << mid_output[0].ord
             numeric << mid_output[1].to_i
         end
-    end
-
-    def valid_length?(ship, coordinate_array)
-        coordinate_array.length == ship.length ? true : false
     end
 
     def valid_consecutive?(ship, coordinate_array)

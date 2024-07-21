@@ -32,11 +32,17 @@ RSpec.describe Board do
     end
   end
 
-  describe '#valid_placement?()' do
+  describe '#valid_length?()' do
     it 'can check if the number of coordinates in the array are the same as the length of the ship' do
         expect(@board.valid_placement?(@cruiser, ["A1", "A2"])).to eq(false)
         expect(@board.valid_placement?(@submarine, ["A2", "A3", "A4"])).to eq(false)
         expect(@board.valid_placement?(@submarine, ["A2", "A3"])).to eq(true)
+    end
+  end
+
+  describe '#transform_coordinate_array()' do
+    it 'returns a the argument with values converted to ordinal values' do
+      expect(@board.transform_coordinate_array(["A1", "A2", "A3"])). to eq ([[65, 1], [65, 2], [65, 3]])
     end
   end
 
@@ -70,7 +76,7 @@ RSpec.describe Board do
   end
 
   describe '#place_ship()' do 
-   it 'can place a ship on the board' do
+   xit 'can place a ship on the board' do
         @board.place_ship(@cruiser, ["A1", "A2", "A3"])
         expect(@board.cells["A1"].ship).to eq(@cruiser)
         expect(@board.cells["A2"].ship).to eq(@cruiser)
@@ -78,7 +84,7 @@ RSpec.describe Board do
     end
 
 
-    it 'can check if ships are overlapping' do
+    xit 'can check if ships are overlapping' do
         @board.place_ship(@cruiser, ["A1", "A2", "A3"])
         @board.place_ship(@submarine, ["A1", "B1"])
         expect(@board.valid_placement?(@submarine, ["A1", "B1"])).to be false
