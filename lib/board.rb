@@ -22,7 +22,7 @@ class Board
 
     def valid_placement?(ship, coordinate_array)
         if ship.class == Ship && coordinate_array.class == Array
-            valid_length?(ship, coordinate_array) && valid_consecutive?(ship, coordinate_array)
+            valid_length?(ship, coordinate_array) && no_overlap?(coordinate_array) && valid_consecutive?(ship, coordinate_array) 
         else
             false
         end
@@ -59,6 +59,21 @@ class Board
             else 
                 false
             end
+        end
+    end
+
+    def place_ship(ship, coordinate_array)
+        if no_overlap?(coordinate_array)
+            coordinate_array.each do |coordinate|
+                @cells[coordinate].place_ship(ship)
+            end
+        end
+
+    end
+
+    def no_overlap?(coordinate_array)
+        coordinate_array.each do |coordinate|
+            @cells[coordinate].ship != nil ? true : false
         end
     end
 end

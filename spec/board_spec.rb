@@ -32,6 +32,13 @@ RSpec.describe Board do
     end
   end
 
+  describe '#valid_placement?()' do 
+    it 'requires ship and placement array as arguments' do
+        expect(@board.valid_placement?(@submarine, ["A1", "A2"])).to eq (true)
+        expect(@board.valid_placement?("WRONG ARG", 1738)).to eq (false)
+    end
+  end
+
   describe '#valid_length?()' do
     it 'check the number of coordinates in array are the same as the length of ship' do
         expect(@board.valid_placement?(@cruiser, ["A1", "A2"])).to eq(false)
@@ -76,7 +83,7 @@ RSpec.describe Board do
   end
 
   describe '#place_ship()' do 
-   xit 'can place a ship on the board' do
+    it 'can place a ship on the board' do
         @board.place_ship(@cruiser, ["A1", "A2", "A3"])
         expect(@board.cells["A1"].ship).to eq(@cruiser)
         expect(@board.cells["A2"].ship).to eq(@cruiser)
@@ -84,7 +91,7 @@ RSpec.describe Board do
     end
 
 
-    xit 'can check if ships are overlapping' do
+    it 'can check if ships are overlapping' do
         @board.place_ship(@cruiser, ["A1", "A2", "A3"])
         @board.place_ship(@submarine, ["A1", "B1"])
         expect(@board.valid_placement?(@submarine, ["A1", "B1"])).to be false
