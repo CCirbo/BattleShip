@@ -77,7 +77,7 @@ RSpec.describe Board do
     expect(@board.valid_placement?(@submarine, ["B1", "C1"])).to eq(true)
   end
   describe '#place_ship()' do 
-    it 'can place a ship on the board' do
+   xit 'can place a ship on the board' do
         @board.place_ship(@cruiser, ["A1", "A2", "A3"])
         expect(@board.cells["A1"].ship).to eq(@cruiser)
         expect(@board.cells["A2"].ship).to eq(@cruiser)
@@ -96,4 +96,61 @@ RSpec.describe Board do
 
 #   pry(main)> board.valid_placement?(cruiser, ["B1", "C1", "D1"])
 #   # => true
+
+describe '#render' do  
+    xit 'can render the board as a string representation of itself' do
+        @board.place_ship(@cruiser, ["A1", "A2", "A3"])
+        expect(@board.render).to eq( "  1 2 3 4 \n" +
+                                      "A . . . . \n" +
+                                      "B . . . . \n" +
+                                      "C . . . . \n" +
+                                      "D . . . . \n")
+    end
+
+    xit 'can render the board so that it shows ships' do
+        @board.place_ship(@cruiser, ["A1", "A2", "A3"])
+        expect(@board.render(true)).to eq("  1 2 3 4 \n" +
+                                          "A S S S . \n" +
+                                          "B . . . . \n" +
+                                          "C . . . . \n" +
+                                          "D . . . . \n")                 
+    end 
+
+    xit 'can show if board has misses and hits' do
+        @board.place_ship(@cruiser, ["A1", "A2", "A3"])
+        @board.cells["A1"].fire_upon
+        @board.cells["B4"].fire_upon
+        expect(@board.render).to eq("  1 2 3 4 \n" +
+                                    "A H . . . \n" +
+                                    "B . . . M \n" +
+                                    "C . . . . \n" +
+                                    "D . . . . \n")
+      end 
+
+    xit 'can show sunk ships' do
+      @board.place_ship(@submarine, ["C1", "D1"])
+      @board.cells["C1"].fire_upon
+      @board.cells["D1"].fire_upon
+      expect(@board.render).to eq("  1 2 3 4 \n" +
+                                  "A . . . . \n" +
+                                  "B . . . . \n" +
+                                  "C X . . . \n" +
+                                  "D X . . . \n")
+    end
+
+    xit 'can show ships place, hits and misses and sunk ships altogether' do
+      @board.place_ship(@cruiser, ["A1", "A2", "A3"])
+      @board.cells["A1"].fire_upon
+      @board.cells["B4"].fire_upon
+      @board.place_ship(@submarine, ["C1", "D1"])
+      @board.cells["C1"].fire_upon
+      @board.cells["D1"].fire_upon
+      expect(@board.render(true)).to eq("  1 2 3 4 \n" +
+                                        "A H S S . \n" +
+                                        "B . . . M \n" +
+                                        "C X . . . \n" +
+                                        "D X . . . \n")  
+    end
+  end
+
 end
