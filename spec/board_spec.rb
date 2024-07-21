@@ -33,7 +33,7 @@ RSpec.describe Board do
   end
 
   describe '#valid_length?()' do
-    it 'can check if the number of coordinates in the array are the same as the length of the ship' do
+    it 'check the number of coordinates in array are the same as the length of ship' do
         expect(@board.valid_placement?(@cruiser, ["A1", "A2"])).to eq(false)
         expect(@board.valid_placement?(@submarine, ["A2", "A3", "A4"])).to eq(false)
         expect(@board.valid_placement?(@submarine, ["A2", "A3"])).to eq(true)
