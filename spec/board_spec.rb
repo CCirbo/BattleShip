@@ -20,4 +20,4 @@ RSpec.describe Board do
       expect(@board.cells["D4"]).to be_an_instance_of(Cell)
     end
   end
-end
+                                                                                                                                                                                                                                                                          end
