@@ -82,6 +82,20 @@ RSpec.describe Board do
     end
   end
 
+  describe '#row_consecutive?()' do
+
+  end
+  describe '#column_consecutive?()' do
+
+  end
+  describe '#three_in_a_row?()' do
+
+  end
+  describe '#Three_in_a_column?()' do
+
+  end
+
+
   describe '#place_ship()' do 
    it 'can place a ship on the board' do
         @board.place_ship(@cruiser, ["A1", "A2", "A3"])
