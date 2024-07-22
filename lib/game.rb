@@ -98,19 +98,19 @@ class Game
   def player_turn_shot
         puts " \n Enter the coordinate for your shot: \n "
             user_input = gets.chomp.upcase 
-        if @computer_board.valid_coordinate?(user_input) && !@computer_board.cells[user_input].fired_upon?
-            @computer_board.cells[user_input].fire_upon
-        elsif @computer_board.valid_coordinate?(user_input)
-            puts "You have already fired here.  Enter a new coordinate:"
-            user_input = gets.chomp.upcase
-        else
-            puts "Invalid placement. Enter a new coordinate:"
-            user_input = gets.chomp.upcase
-        end
-        # until @computer_board.valid_coordinate?(user_input) && !@computer_board.cells[user_input].fired_upon?
+        # if @computer_board.valid_coordinate?(user_input) && !@computer_board.cells[user_input].fired_upon?
+        #     @computer_board.cells[user_input].fire_upon
+        # elsif @computer_board.valid_coordinate?(user_input)
         #     puts "You have already fired here.  Enter a new coordinate:"
         #     user_input = gets.chomp.upcase
+        # else
+        #     puts "Invalid placement. Enter a new coordinate:"
+        #     user_input = gets.chomp.upcase
         # end
+        until @computer_board.valid_coordinate?(user_input) && !@computer_board.cells[user_input].fired_upon?
+            puts "You have already fired here.  Enter a new coordinate:"
+            user_input = gets.chomp.upcase
+        end
 
         #this could be put into a helper method and then on line 82.5 we call it
         #puts @computer_board.render
