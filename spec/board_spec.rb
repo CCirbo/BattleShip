@@ -55,11 +55,6 @@ RSpec.describe Board do
 
   describe '#valid_consecutive?()' do 
 
-    it 'can check if there is a valid vertical placement' do
-        expect(@board.valid_consecutive?(@cruiser, ["A1", "B1", "C1"])).to eq(true)
-        expect(@board.valid_consecutive?(@cruiser, ["A3", "B2", "C3"])).to eq(false)
-
-    end
     
     it 'can check that diagonal placement is not valid' do
         expect(@board.valid_consecutive?(@cruiser, ["A1", "B2", "C3"])).to eq(false)
@@ -68,7 +63,13 @@ RSpec.describe Board do
 
     it 'can check if the coordinates are consecutive' do
         expect(@board.valid_consecutive?(@cruiser, ["A1", "A2", "A4"])).to eq(false)
+        expect(@board.valid_consecutive?(@cruiser, ["A1", "A2", "A3"])).to eq(true)
+        expect(@board.valid_consecutive?(@submarine, ["A1", "A3"])).to eq(false)
+        expect(@board.valid_consecutive?(@submarine, ["A1", "A2"])).to eq(true)
+        expect(@board.valid_consecutive?(@cruiser, ["A1", "B1", "C4"])).to eq(false)
+        expect(@board.valid_consecutive?(@cruiser, ["A1", "B1", "C1"])).to eq(true)
         expect(@board.valid_consecutive?(@submarine, ["A1", "C1"])).to eq(false)
+        expect(@board.valid_consecutive?(@submarine, ["A1", "B1"])).to eq(true)
         expect(@board.valid_consecutive?(@cruiser,["A3", "A2", "A1"])).to eq(false)
         expect(@board.valid_consecutive?(@cruiser,["A1", "A2", "A3"])).to eq(true)
         expect(@board.valid_consecutive?(@submarine, ["C1", "B1"])).to eq(false)
