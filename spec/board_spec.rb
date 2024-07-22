@@ -83,18 +83,28 @@ RSpec.describe Board do
   end
 
   describe '#row_consecutive?()' do
-
+    it 'can check if there is a valid horizontal placement' do
+      expect(@board.row_consecutive?([[65, 1], [65, 2], [65, 3]])).to eq(true)
+      expect(@board.row_consecutive?([[65, 1], [67, 1]])).to eq(false)
+      expect(@board.row_consecutive?([[65, 3], [65, 2], [65, 1]])).to eq(false)
+      expect(@board.row_consecutive?([[67, 1], [66, 1]])).to eq(false)
+    end
   end
+
   describe '#column_consecutive?()' do
-
+    xit 'should check this helper works' do 
+    end
   end
+
   describe '#three_in_a_row?()' do
-
+    xit 'should check this helper works' do 
+    end
   end
+
   describe '#Three_in_a_column?()' do
-
+    xit 'should check this helper works' do 
+    end
   end
-
 
   describe '#place_ship()' do 
    it 'can place a ship on the board' do
