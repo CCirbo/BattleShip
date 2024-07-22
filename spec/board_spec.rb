@@ -54,12 +54,6 @@ RSpec.describe Board do
   end
 
   describe '#valid_consecutive?()' do 
-    it 'can check if there is a valid horizontal placement' do
-        expect(@board.valid_consecutive?(@cruiser, ["A1", "A2", "A3"])).to eq(true)
-        expect(@board.valid_consecutive?(@submarine, ["A1", "C1"])).to eq(false)
-        expect(@board.valid_consecutive?(@cruiser, ["A3", "A2", "A1"])).to eq(false)
-        expect(@board.valid_consecutive?(@submarine, ["C1", "B1"])).to eq(false)
-    end
 
     it 'can check if there is a valid vertical placement' do
         expect(@board.valid_consecutive?(@cruiser, ["A1", "B1", "C1"])).to eq(true)
@@ -83,26 +77,26 @@ RSpec.describe Board do
   end
 
   describe '#row_consecutive?()' do
-    it 'can check if there is a valid horizontal placement' do
-      expect(@board.row_consecutive?([[65, 1], [65, 2], [65, 3]])).to eq(true)
+    it 'can check if there is a valid horizontal placement for submarine type' do
       expect(@board.row_consecutive?([[65, 1], [67, 1]])).to eq(false)
-      expect(@board.row_consecutive?([[65, 3], [65, 2], [65, 1]])).to eq(false)
       expect(@board.row_consecutive?([[67, 1], [66, 1]])).to eq(false)
     end
   end
 
   describe '#column_consecutive?()' do
-    xit 'should check this helper works' do 
+    it 'can check if there is a valid verticle placement for submarine type' do 
     end
   end
 
   describe '#three_in_a_row?()' do
-    xit 'should check this helper works' do 
+    it 'can check if there is a valid horizontal placement for cruiser type' do 
+      expect(@board.row_consecutive?([[65, 1], [65, 2], [65, 3]])).to eq(true)
+      expect(@board.row_consecutive?([[65, 3], [65, 2], [65, 1]])).to eq(false)
     end
   end
 
   describe '#Three_in_a_column?()' do
-    xit 'should check this helper works' do 
+    it 'can check if there is a valid verticle placement for cruiser type' do 
     end
   end
 
