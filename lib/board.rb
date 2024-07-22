@@ -22,10 +22,15 @@ class Board
 
     def valid_placement?(ship, coordinate_array)
         if ship.class == Ship && coordinate_array.class == Array
-            valid_length?(ship, coordinate_array) && valid_consecutive?(ship, coordinate_array)
+            valid_length?(ship, coordinate_array) && valid_consecutive?(ship, coordinate_array) && !(overlap?(coordinate_array))
+            #return false if no_overlap?(coordinate_array)
         else
             false
         end
+    end
+
+    def valid_length?(ship, coordinate_array)
+        coordinate_array.length == ship.length ? true : false
     end
 
     def transform_coordinate_array(coordinate_array)
@@ -35,10 +40,6 @@ class Board
             numeric << mid_output[0].ord
             numeric << mid_output[1].to_i
         end
-    end
-
-    def valid_length?(ship, coordinate_array)
-        coordinate_array.length == ship.length ? true : false
     end
 
     def valid_consecutive?(ship, coordinate_array)
@@ -60,5 +61,36 @@ class Board
                 false
             end
         end
+    end
+
+    def place_ship(ship, coordinate_array)
+        if overlap?(coordinate_array) == false
+            coordinate_array.each do |coordinate|
+                @cells[coordinate].place_ship(ship)
+            end
+        end
+
+    end
+
+    def overlap?(coordinate_array)
+        coordinate_array.any? do |coordinate|
+            @cells[coordinate].ship != nil # ship attr is occupied 
+        end
+    end
+
+    def render(show_ship = false)
+    string_output = "  1 2 3 4 \n"
+        
+        ("A".."D").each do |letter|
+            string_output += "#{letter} "
+            
+            (1..4).each do |number|
+            coordinate = "#{letter}#{number}"
+            string_output += @cells[coordinate].render(show_ship)
+            string_output += " " unless number == 4
+            end
+            string_output += " \n"
+        end
+        string_output
     end
 end
