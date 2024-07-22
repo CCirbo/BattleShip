@@ -1,3 +1,7 @@
+require './lib/ship'
+require './lib/cell'
+require './lib/board'
+
 class Game
   def initialize
     @player_name = nil
@@ -156,7 +160,7 @@ class Game
     end
     choice = gets.chomp.downcase
     case choice
-    when "yes",
+    when "yes"
         run_game
     when "no"
         puts "Exciting game. Goodbye #{@player_name}"
