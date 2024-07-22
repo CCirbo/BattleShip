@@ -79,8 +79,18 @@ class Board
     end
 
     def render(show_ship = false)
-        @cells.values.each do |cell|
-
+    string_output = "  1 2 3 4 \n"
+        
+        ("A".."D").each do |letter|
+            string_output += "#{letter} "
+            
+            (1..4).each do |number|
+            coordinate = "#{letter}#{number}"
+            string_output += @cells[coordinate].render(show_ship)
+            string_output += " " unless number == 4
+            end
+            string_output += " \n"
         end
+        string_output
     end
 end
