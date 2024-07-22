@@ -35,7 +35,7 @@ RSpec.describe Board do
   describe '#valid_placement?()' do 
     it 'requires ship and placement array as arguments' do
         expect(@board.valid_placement?(@submarine, ["A1", "A2"])).to eq (true)
-        #expect(@board.valid_placement?("WRONG ARG", 1738)).to eq (false)
+        expect(@board.valid_placement?("WRONG ARG", 1738)).to eq (false)
     end
   end
 
@@ -83,7 +83,7 @@ RSpec.describe Board do
   end
 
   describe '#place_ship()' do 
-   xit 'can place a ship on the board' do
+   it 'can place a ship on the board' do
         @board.place_ship(@cruiser, ["A1", "A2", "A3"])
         expect(@board.cells["A1"].ship).to eq(@cruiser)
         expect(@board.cells["A2"].ship).to eq(@cruiser)
@@ -99,9 +99,8 @@ RSpec.describe Board do
   end
 
   describe '#render' do  
-   xit 'can render the board as a string representation of itself' do
+   it 'can render the board as a string representation of itself' do
         @board.place_ship(@cruiser, ["A1", "A2", "A3"])
-        require'pry';binding.pry
         expect(@board.render).to eq( "  1 2 3 4 \n" +
                                     "A . . . . \n" +
                                     "B . . . . \n" +
@@ -109,7 +108,7 @@ RSpec.describe Board do
                                     "D . . . . \n")
     end
 
-   xit 'can render the board so that it shows ships' do
+   it 'can render the board so that it shows ships' do
         @board.place_ship(@cruiser, ["A1", "A2", "A3"])
         expect(@board.render(true)).to eq("  1 2 3 4 \n" +
                                           "A S S S . \n" +
@@ -118,7 +117,7 @@ RSpec.describe Board do
                                           "D . . . . \n")                 
     end 
 
-   xit 'can show if board has misses and hits' do
+   it 'can show if board has misses and hits' do
         @board.place_ship(@cruiser, ["A1", "A2", "A3"])
         @board.cells["A1"].fire_upon
         @board.cells["B4"].fire_upon
@@ -129,7 +128,7 @@ RSpec.describe Board do
                                     "D . . . . \n")
     end 
 
-   xit 'can show sunk ships' do
+   it 'can show sunk ships' do
         @board.place_ship(@submarine, ["C1", "D1"])
         @board.cells["C1"].fire_upon
         @board.cells["D1"].fire_upon
@@ -140,7 +139,7 @@ RSpec.describe Board do
                                     "D X . . . \n")
     end
 
-   xit 'can show ships place, hits and misses and sunk ships altogether' do
+   it 'can show ships place, hits and misses and sunk ships altogether' do
         @board.place_ship(@cruiser, ["A1", "A2", "A3"])
         @board.cells["A1"].fire_upon
         @board.cells["B4"].fire_upon

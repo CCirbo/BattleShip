@@ -42,25 +42,55 @@ class Board
         end
     end
 
+    # def valid_consecutive?(ship, coordinate_array)
+    #     numeric_coordinates = transform_coordinate_array(coordinate_array)
+    #     if ship.length == 2
+    #         if numeric_coordinates[0][0] == numeric_coordinates [1][0] # row
+    #             numeric_coordinates[0][1] + 1 == numeric_coordinates[1][1] ? true : false
+    #         elsif numeric_coordinates[0][1] == numeric_coordinates [1][1] #column
+    #             numeric_coordinates[0][0] + 1 == numeric_coordinates[1][0] ? true : false
+    #         else 
+    #             false
+    #         end
+    #     else #ship.length == 3
+    #         if numeric_coordinates[0][0] == numeric_coordinates [1][0] && numeric_coordinates [1][0] == numeric_coordinates [2][0] #row
+    #             numeric_coordinates[0][1] + 1 == numeric_coordinates[1][1] && numeric_coordinates[1][1] + 1 == numeric_coordinates[2][1] ? true : false
+    #         elsif numeric_coordinates[0][1] == numeric_coordinates [1][1] && numeric_coordinates [1][1] == numeric_coordinates [2][1] #column
+    #             numeric_coordinates[0][0] + 1 == numeric_coordinates[1][0] && numeric_coordinates[1][0] + 1 == numeric_coordinates [2][0] ? true : false
+    #         else 
+    #             false
+    #         end
+    #     end
+    # end
+
     def valid_consecutive?(ship, coordinate_array)
         numeric_coordinates = transform_coordinate_array(coordinate_array)
+        return false unless [2, 3].include?(ship.length)
         if ship.length == 2
-            if numeric_coordinates[0][0] == numeric_coordinates [1][0] # row
-                numeric_coordinates[0][1] + 1 == numeric_coordinates[1][1] ? true : false
-            elsif numeric_coordinates[0][1] == numeric_coordinates [1][1] #column
-                numeric_coordinates[0][0] + 1 == numeric_coordinates[1][0] ? true : false
-            else 
-                false
-            end
-        else #ship.length == 3
-            if numeric_coordinates[0][0] == numeric_coordinates [1][0] && numeric_coordinates [1][0] == numeric_coordinates [2][0] #row
-                numeric_coordinates[0][1] + 1 == numeric_coordinates[1][1] && numeric_coordinates[1][1] + 1 == numeric_coordinates[2][1] ? true : false
-            elsif numeric_coordinates[0][1] == numeric_coordinates [1][1] && numeric_coordinates [1][1] == numeric_coordinates [2][1] #column
-                numeric_coordinates[0][0] + 1 == numeric_coordinates[1][0] && numeric_coordinates[1][0] + 1 == numeric_coordinates [2][0] ? true : false
-            else 
-                false
-            end
+          return row_consecutive?(numeric_coordinates) || column_consecutive?(numeric_coordinates)
+        elsif ship.length == 3
+          return three_in_a_row?(numeric_coordinates) || three_in_a_column?(numeric_coordinates)
+        else
+            false
         end
+    end
+   
+    def row_consecutive?(coordinates)
+        coordinates[0][0] == coordinates[1][0] && coordinates[0][1] + 1 == coordinates[1][1]
+    end
+    
+    def column_consecutive?(coordinates)
+        coordinates[0][1] == coordinates[1][1] && coordinates[0][0] + 1 == coordinates[1][0]
+    end 
+    
+    def three_in_a_row?(coordinates)
+        coordinates[0][0] == coordinates[1][0] && coordinates[1][0] == coordinates[2][0] &&
+        coordinates[0][1] + 1 == coordinates[1][1] && coordinates[1][1] + 1 == coordinates[2][1]
+    end
+    
+    def three_in_a_column?(coordinates)
+        coordinates[0][1] == coordinates[1][1] && coordinates[1][1] == coordinates[2][1] &&
+        coordinates[0][0] + 1 == coordinates[1][0] && coordinates[1][0] + 1 == coordinates[2][0]
     end
 
     def place_ship(ship, coordinate_array)
