@@ -156,7 +156,7 @@ class Game
     end
     choice = gets.chomp.downcase
     case choice
-    when "yes",
+    when "yes"
         run_game
     when "no"
         puts "Exciting game. Goodbye #{@player_name}"
