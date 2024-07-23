@@ -46,11 +46,9 @@ class Board
         numeric_coordinates = transform_coordinate_array(coordinate_array)
         return false unless [2, 3].include?(ship.length)
         if ship.length == 2
-          return row_consecutive?(numeric_coordinates) || column_consecutive?(numeric_coordinates)
+            (row_consecutive?(numeric_coordinates) || column_consecutive?(numeric_coordinates)) 
         elsif ship.length == 3
-          return three_in_a_row?(numeric_coordinates) || three_in_a_column?(numeric_coordinates)
-        else
-            false
+            (three_in_a_row?(numeric_coordinates) || three_in_a_column?(numeric_coordinates))
         end
     end
    
@@ -78,7 +76,6 @@ class Board
                 @cells[coordinate].place_ship(ship)
             end
         end
-
     end
 
     def overlap?(coordinate_array)
@@ -88,15 +85,15 @@ class Board
     end
 
     def render(show_ship = false)
-    string_output = "  1 2 3 4 \n"
+        string_output = "  1 2 3 4 \n"
         
         ("A".."D").each do |letter|
             string_output += "#{letter} "
             
             (1..4).each do |number|
-            coordinate = "#{letter}#{number}"
-            string_output += @cells[coordinate].render(show_ship)
-            string_output += " " unless number == 4
+                coordinate = "#{letter}#{number}"
+                string_output += @cells[coordinate].render(show_ship)
+                string_output += " " unless number == 4
             end
             string_output += " \n"
         end
