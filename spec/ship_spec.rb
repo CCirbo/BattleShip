@@ -4,7 +4,7 @@ RSpec.configure do |config|
  config.formatter = :documentation 
  end
 
- RSpec.describe Ship do 
+RSpec.describe Ship do 
   before(:each) do 
     @cruiser = Ship.new('Cruiser', 3)
   end

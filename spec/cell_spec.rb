@@ -54,24 +54,24 @@ RSpec.describe Cell do
   describe '#fire_upon' do
     it 'will update ship health if ship has been fired upon' do
       expect(@cell.fired_upon).to eq(false)
-      @cell.fire_upon
 
+      @cell.fire_upon
       expect(@cell.fired_upon).to eq(true)
     end
     
     it 'will NOT revert status of fired_upon from true to false' do
       @cell.fire_upon
       expect(@cell.fired_upon).to eq(true)
-      @cell.fire_upon
 
+      @cell.fire_upon
       expect(@cell.fired_upon).to eq(true)
     end
     
     it 'will update ship health if cell is occupied' do
       @cell.place_ship(@cruiser)
       expect(@cell.fired_upon).to eq(false)
+
       @cell.fire_upon
-      
       expect(@cell.ship.health).to eq(2)
       expect(@cell.fired_upon).to eq(true)
     end
@@ -84,12 +84,14 @@ RSpec.describe Cell do
 
     it 'changes "." to "M" if fired upon and contains no ships' do
       expect(@cell_1.render).to eq(".")
+
       @cell_1.fire_upon
       expect(@cell_1.render).to eq("M")
     end
 
     it 'shows the string "H" if cell has been fired upon and it contains a ship' do
       @cell_1.place_ship(@cruiser)
+
       @cell_1.fire_upon
       expect(@cell_1.render).to eq("H")
     end
@@ -98,6 +100,7 @@ RSpec.describe Cell do
       @cell_1.place_ship(@cruiser)
       @cell_1.fire_upon
       expect(@cell_1.render).to eq("H")
+      
       2.times do
         @cell_1.fire_upon
       end
