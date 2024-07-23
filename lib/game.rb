@@ -37,11 +37,11 @@ class Game
   def display_main_menu
     unless @name_asked
       puts "\n Please enter your name \n\n"
-      @player_name = gets.chomp.capitalize
+      @player_name = gets.chomp.upcase
       @name_asked = true
     end
       puts "\nGreetings, #{@player_name}, Welcome to BATTLESHIP \n "
-      puts "My name is Joshua, shall we play a game? \n\n"
+      puts "My name is JOSHUA, shall we play a game? \n\n"
       puts "Enter 'yes' to play or 'no' to quit. \n\n"
   end
    
@@ -64,9 +64,13 @@ class Game
   end
   
   def player_ship_placement_prompt
+      puts "\nHere are the rules of engagement. \n"
       puts "\nI have laid out my two ships on the grid. \n "
       puts "You now need to lay out your two ships. \n "
       puts "The Cruiser is three units long and the Submarine is two units long. \n "
+      puts "Valid coordinate placement uses letters A-D and numbers 1-4, (ie, A1, A2, A3).
+      Coordinates must be consecutive, not diagonal or reversed. \n\n"
+      puts "We will play until I sink both of your ships or you sink mine. Good Luck! \n\n"
   end
   
   def player_ship_placement(ship, show)
@@ -82,7 +86,6 @@ class Game
 
       until @player_board.valid_placement?(ship, user_input)
         coord_statement(user_input, ship)
-        #   puts "Invalid placement. Must be consecutive and not diagonal"
         user_input = gets.chomp.upcase.gsub(",", " ").split
       end
       @player_board.place_ship(ship, user_input)
@@ -90,23 +93,24 @@ class Game
   end
 
   def coord_statement(input, ship)
-    if input.length != ship.length
-      puts "You must enter #{ship.length} coordinates."
-    elsif input.any? { |coord| !@player_board.valid_coordinate?(coord) }
-      puts "One or more coordinates are invalid. Please enter valid coordinates."
-    elsif input.any? { |coord| @player_board.cells[coord].fired_upon? }
-      puts "One or more coordinates have already been fired upon. Please choose different coordinates."
-    elsif input[0].to_i > 0
+    if input.any? { |coord| coord[0].to_i > 0 }
       puts "Coordinates must start with a letter."
-    else
+    elsif input.any? { |coord| !@player_board.valid_coordinate?(coord) }
+      puts "One or more coordinates are invalid. Please enter valid coordinates." 
+    elsif input.any? { |coord| coord.length < 2 || coord.length > 2 }
+      puts "See example"
+    elsif input.length != ship.length
+      puts "You must enter #{ship.length} coordinates."
+    elsif !@player_board.valid_placement?(ship, input)
       puts "Invalid placement. Coordinates must be consecutive, not diagonal or reversed."
+    else
     end
   end
 
   def turn_start
-      puts "==========COMPUTER BOARD========= \n "
+      puts "==========COMPUTER GAME BOARD========= \n "
       puts @computer_board.render
-      puts " \n ==========PLAYER BOARD=========== \n "
+      puts " \n ==========#{@player_name} GAME BOARD=========== \n "
       puts @player_board.render(true)
   end
   
@@ -275,16 +279,16 @@ class Game
 
   def end_game
     if computer_won?
-        puts "\nI Won! #{@player_name}, would you like to play again? (yes or no) \n "
+        puts "\nI am the victor! #{@player_name}, would you like to play again? (yes or no) \n "
     else
-        puts "\n#{@player_name}, You Won! Would you like to play again? (yes or no) \n "
+        puts "\n#{@player_name}, you have defeated me! Would you like to play again? (yes or no) \n "
     end
     choice = gets.chomp.downcase
         case choice
         when "yes"
             run_game
         when "no"
-            puts "\nExciting game #{@player_name}! Goodbye. \n"
+            puts "\n#{@player_name}, you are a worthy opponent! Until we play again, goodbye. \n"
             exit
         else
             puts "\nInvalid choice. Please enter 'yes' to play again or 'no' to quit. \n"
