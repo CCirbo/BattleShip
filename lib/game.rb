@@ -37,7 +37,11 @@ class Game
   def display_main_menu
     unless @name_asked
       puts "\n Please enter your name \n\n"
+
+ 
+
       @player_name = gets.chomp.capitalize
+
       @name_asked = true
     end
       puts "\nGreetings, #{@player_name}, Welcome to BATTLESHIP \n "
@@ -70,9 +74,20 @@ class Game
   end
   
   def player_ship_placement(ship, show)
+    example = nil
+    if ship.length == 3
+        example = "(ie. A1, A2, A3)"
+    else 
+        example = "(ie. A1, A2)"
+    end
       show == 0 ? (puts @player_board.render) : (puts @player_board.render(true))
-          puts " \n Enter the squares for the #{ship.name} (#{ship.length} spaces (ie. A1, A2, A3)): \n "
+
+          puts " \n Enter the squares for the #{ship.name} (#{ship.length} spaces #{example}): \n "
+      
+
+       
           user_input = gets.chomp.upcase.gsub(",", " ").split
+
       until @player_board.valid_placement?(ship, user_input)
           puts "Invalid placement. Must be consecutive and not diagonal"
           user_input = gets.chomp.upcase.gsub(",", " ").split
@@ -89,24 +104,91 @@ class Game
   end
   
   def player_turn_shot
-      puts " \n Enter the coordinate for your shot: \n "
-          user_input = gets.chomp.upcase
-      until @computer_board.valid_coordinate?(user_input) && !@computer_board.cells[user_input].fired_upon?
+
+        puts " \n Enter the coordinate for your shot: \n "
+            user_input = gets.chomp.upcase 
+        until @computer_board.valid_coordinate?(user_input) && !@computer_board.cells[user_input].fired_upon?
         #   puts "You have already fired here.  Enter a new coordinate:"
         feedback_statement(user_input)
           user_input = gets.chomp.upcase
       end
-      #this could be put into a helper method and then on line 82.5 we call it
-          @computer_board.cells[user_input].fire_upon
-    #   puts @computer_board.render
-      outcome = @computer_board.cells[user_input].render
-      shot_message = case outcome
-      when "M" then "was a miss."
-      when "H" then "scored a hit!"
-      when "X" then "sunk my battleship!"
-      else "Oh no, something has gone wrong"
+
+        #this could be put into a helper method and then on line 82.5 we call it
+      @computer_board.cells[user_input].fire_upon
+        #puts @computer_board.render
+        outcome = @computer_board.cells[user_input].render
+        shot_message = case outcome
+            when "M" then "was a miss."
+            when "H" then "scored a hit!"
+            when "X" then "sunk my battleship!"
+            else "Oh no, something has gone wrong"
+        end
+      shot_art = case outcome
+        when "M" then "                 
+                                     |__
+                                     |\/
+                                     ---
+                                     / | [
+                              !      | |||
+                            _/|     _/|-++'
+                        +  +--|    |--|--|_ |-
+                     { /|__|  |/\__|  |--- |||__/
+                    +---------------___[}-_===_.'____                 
+
+ __..._____--==/___]_|__|_____________________________[___\==--____,------' .7
+|                                                                     BB-61/
+ \_________________________________________________________________________|"
+        when "H" then "                 
+                                     |__
+                                     |\/
+                                     ---               _.__.  . .
+                                     / | [          +8#8+..``
+                              !      | |||     '.+#8##8#88#+-1`  '`   
+                            _/|     _/|-++' +**#8###8#88###``
+                        +  +--|    |--|-### |###88#=  ^""```
+                     { /|__|  |/\__|  +8#8#++#8#/       
+                    +--------------#+###+#_=#=_.'____                 
+                                #\>##+./#++   |
+ __..._____--==/___]_|__|_____#>-  @  -<#_______________[___\==--____,------' .7
+|                               / | | \                                 BB-61/
+ \_________________________________________________________________________|"
+        when "X" then "                 
+                                     |__
+                                     |\/
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                     / | [            .                 .
+           .         .         !      | |||         .
+                 .          _/|     _/|-++'                   .
+    .                   +  +--|    |--|--|_ |-              .
+     .               { /|__|  |/\__|  |--- |||__/
+        .           +---------------___[}-_===_.'____        .        
+                               #\>##+./#++   |   #\>##+./#++ .
+ __..._____->-  @  _<_|__|_____#>-  @  -<#_______#>-  @  -<#__\==--____,------' .7
+|            / | | \            / | | \           / | | \              BB-61/
+ \_________________________________________________________________________|"
+        else ""
+
+#       puts " \n Enter the coordinate for your shot: \n "
+#           user_input = gets.chomp.upcase
+#       until @computer_board.valid_coordinate?(user_input) && !@computer_board.cells[user_input].fired_upon?
+#         #   puts "You have already fired here.  Enter a new coordinate:"
+#         feedback_statement(user_input)
+#           user_input = gets.chomp.upcase
+#       end
+#       #this could be put into a helper method and then on line 82.5 we call it
+#           @computer_board.cells[user_input].fire_upon
+#     #   puts @computer_board.render
+#       outcome = @computer_board.cells[user_input].render
+#       shot_message = case outcome
+#       when "M" then "was a miss."
+#       when "H" then "scored a hit!"
+#       when "X" then "sunk my battleship!"
+#       else "Oh no, something has gone wrong"
+
       end
-      puts "Your shot on #{user_input} #{shot_message} \n "
+      puts "#{shot_art} \n"
+      puts "\n"
+      puts "==========================Your shot on #{user_input} #{shot_message}========================== \n "
   end
 
   def feedback_statement(input)
@@ -128,7 +210,9 @@ class Game
           random_coords = @player_board.cells.keys.sample
       end
           @player_board.cells[random_coords].fire_upon
+
     #   puts @player_board.render(true)
+
       computer_outcome = @player_board.cells[random_coords].render
       computer_shot_message = case computer_outcome
           when "M" then "was a miss."
@@ -136,8 +220,55 @@ class Game
           when "X" then "sunk your battleship!"
           else "Oh no, something has gone wrong"
           end 
-      puts "My shot on #{random_coords} #{computer_shot_message} \n "
-  end
+      shot_art = case computer_outcome
+          when "M" then "                 
+                                     |__
+                                     |\/
+                                     ---
+                                     / | [
+                              !      | |||
+                            _/|     _/|-++'
+                        +  +--|    |--|--|_ |-
+                     { /|__|  |/\__|  |--- |||__/
+                    +---------------___[}-_===_.'____                 
+
+ __..._____--==/___]_|__|_____________________________[___\==--____,------' .7
+|                                                                     BB-61/
+ \_________________________________________________________________________|"
+        when "H" then "                 
+                                     |__
+                                     |\/
+                                     ---               _.__.  . .
+                                     / | [          +8#8+..``
+                              !      | |||     '.+#8##8#88#+-1`  '`   
+                            _/|     _/|-++' +**#8###8#88###``
+                        +  +--|    |--|-### |###88#=  ^""```
+                     { /|__|  |/\__|  +8#8#++#8#/       
+                    +--------------#+###+#_=#=_.'____                 
+                                #\>##+./#++   |
+ __..._____--==/___]_|__|_____#>-  @  -<#_______________[___\==--____,------' .7
+|                               / | | \                                 BB-61/
+ \_________________________________________________________________________|"
+        when "X" then "                 
+                                     |__
+                                     |\/
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                     / | [            .                 .
+           .         .         !      | |||         .
+                 .          _/|     _/|-++'                   .
+    .                   +  +--|    |--|--|_ |-              .
+     .               { /|__|  |/\__|  |--- |||__/
+        .           +---------------___[}-_===_.'____        .        
+                               #\>##+./#++   |   #\>##+./#++ .
+ __..._____->-  @  _<_|__|_____#>-  @  -<#_______#>-  @  -<#__\==--____,------' .7
+|            / | | \            / | | \           / | | \              BB-61/
+ \_________________________________________________________________________|"
+        else ""
+        end
+        puts "#{shot_art} \n"
+        puts "\n"
+        puts "==========================My shot on #{random_coords} #{computer_shot_message}==========================\n "
+    end
 
   def play_game
       until game_over?
@@ -176,7 +307,7 @@ class Game
         exit
     else
         puts "Invalid choice. Please enter 'yes' to play again or 'no' to quit."
-    end_game
+        end_game
     end
  end
 end                 
