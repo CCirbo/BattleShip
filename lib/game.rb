@@ -26,7 +26,7 @@ class Game
       when 'yes'
           run_game
       when 'no'
-          puts "Exiting game #{@player_name}. Goodbye!"
+          puts "Leaving so soon #{@player_name}? See you next time."
           exit 
       else
           puts "Invalid please enter 'yes' to play or 'no' to quit."
@@ -37,16 +37,12 @@ class Game
   def display_main_menu
     unless @name_asked
       puts "\n Please enter your name \n\n"
-
- 
-
       @player_name = gets.chomp.capitalize
-
       @name_asked = true
     end
       puts "\nGreetings, #{@player_name}, Welcome to BATTLESHIP \n "
       puts "My name is Joshua, shall we play a game? \n\n"
-      puts "Enter 'yes' to play or 'no' to quit."
+      puts "Enter 'yes' to play or 'no' to quit. \n\n"
   end
    
   def run_game
@@ -62,13 +58,13 @@ class Game
   def computer_ship_placement(ship)
       random_coords = @computer_board.cells.keys.sample(ship.length)
       until @computer_board.valid_placement?(ship, random_coords)
-          random_coords = @computer_board.cells.keys.sample(ship.length) 
+        random_coords = @computer_board.cells.keys.sample(ship.length) 
       end
-          @computer_board.place_ship(ship, random_coords)     
+        @computer_board.place_ship(ship, random_coords)     
   end
   
   def player_ship_placement_prompt
-      puts "I have laid out my ships on the grid. \n "
+      puts "\nI have laid out my two ships on the grid. \n "
       puts "You now need to lay out your two ships. \n "
       puts "The Cruiser is three units long and the Submarine is two units long. \n "
   end
@@ -81,19 +77,30 @@ class Game
         example = "(ie. A1, A2)"
     end
       show == 0 ? (puts @player_board.render) : (puts @player_board.render(true))
-
-          puts " \n Enter the squares for the #{ship.name} (#{ship.length} spaces #{example}): \n "
-      
-
-       
-          user_input = gets.chomp.upcase.gsub(",", " ").split
+        puts " \n Enter the coordinates for the #{ship.name} (#{ship.length} spaces #{example}): \n "
+        user_input = gets.chomp.upcase.gsub(",", " ").split
 
       until @player_board.valid_placement?(ship, user_input)
-          puts "Invalid placement. Must be consecutive and not diagonal"
-          user_input = gets.chomp.upcase.gsub(",", " ").split
+        coord_statement(user_input, ship)
+        #   puts "Invalid placement. Must be consecutive and not diagonal"
+        user_input = gets.chomp.upcase.gsub(",", " ").split
       end
       @player_board.place_ship(ship, user_input)
       puts " \n Your #{ship.name} has been placed. \n "
+  end
+
+  def coord_statement(input, ship)
+    if input.length != ship.length
+      puts "You must enter #{ship.length} coordinates."
+    elsif input.any? { |coord| !@player_board.valid_coordinate?(coord) }
+      puts "One or more coordinates are invalid. Please enter valid coordinates."
+    elsif input.any? { |coord| @player_board.cells[coord].fired_upon? }
+      puts "One or more coordinates have already been fired upon. Please choose different coordinates."
+    elsif input[0].to_i > 0
+      puts "Coordinates must start with a letter."
+    else
+      puts "Invalid placement. Coordinates must be consecutive, not diagonal or reversed."
+    end
   end
 
   def turn_start
@@ -104,18 +111,13 @@ class Game
   end
   
   def player_turn_shot
-
-        puts " \n Enter the coordinate for your shot: \n "
-            user_input = gets.chomp.upcase 
-        until @computer_board.valid_coordinate?(user_input) && !@computer_board.cells[user_input].fired_upon?
-        #   puts "You have already fired here.  Enter a new coordinate:"
-        feedback_statement(user_input)
-          user_input = gets.chomp.upcase
+      puts " \n Enter the coordinate for your shot: \n "
+      user_input = gets.chomp.upcase 
+      until @computer_board.valid_coordinate?(user_input) && !@computer_board.cells[user_input].fired_upon?
+      feedback_statement(user_input)
+      user_input = gets.chomp.upcase
       end
-
-        #this could be put into a helper method and then on line 82.5 we call it
       @computer_board.cells[user_input].fire_upon
-        #puts @computer_board.render
         outcome = @computer_board.cells[user_input].render
         shot_message = case outcome
             when "M" then "was a miss."
@@ -123,8 +125,8 @@ class Game
             when "X" then "sunk my battleship!"
             else "Oh no, something has gone wrong"
         end
-      shot_art = case outcome
-        when "M" then "                 
+        shot_art = case outcome
+            when "M" then "                 
                                      |__
                                      |\/
                                      ---
@@ -138,7 +140,7 @@ class Game
  __..._____--==/___]_|__|_____________________________[___\==--____,------' .7
 |                                                                     BB-61/
  \_________________________________________________________________________|"
-        when "H" then "                 
+            when "H" then "                 
                                      |__
                                      |\/
                                      ---               _.__.  . .
@@ -152,7 +154,7 @@ class Game
  __..._____--==/___]_|__|_____#>-  @  -<#_______________[___\==--____,------' .7
 |                               / | | \                                 BB-61/
  \_________________________________________________________________________|"
-        when "X" then "                 
+            when "X" then "                 
                                      |__
                                      |\/
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -166,25 +168,7 @@ class Game
  __..._____->-  @  _<_|__|_____#>-  @  -<#_______#>-  @  -<#__\==--____,------' .7
 |            / | | \            / | | \           / | | \              BB-61/
  \_________________________________________________________________________|"
-        else ""
-
-#       puts " \n Enter the coordinate for your shot: \n "
-#           user_input = gets.chomp.upcase
-#       until @computer_board.valid_coordinate?(user_input) && !@computer_board.cells[user_input].fired_upon?
-#         #   puts "You have already fired here.  Enter a new coordinate:"
-#         feedback_statement(user_input)
-#           user_input = gets.chomp.upcase
-#       end
-#       #this could be put into a helper method and then on line 82.5 we call it
-#           @computer_board.cells[user_input].fire_upon
-#     #   puts @computer_board.render
-#       outcome = @computer_board.cells[user_input].render
-#       shot_message = case outcome
-#       when "M" then "was a miss."
-#       when "H" then "scored a hit!"
-#       when "X" then "sunk my battleship!"
-#       else "Oh no, something has gone wrong"
-
+            else ""
       end
       puts "#{shot_art} \n"
       puts "\n"
@@ -205,14 +189,11 @@ class Game
   end
 
   def computer_turn_shot
-          random_coords = @player_board.cells.keys.sample
+        random_coords = @player_board.cells.keys.sample
       until @player_board.valid_coordinate?(random_coords) && !@player_board.cells[random_coords].fired_upon?
-          random_coords = @player_board.cells.keys.sample
+        random_coords = @player_board.cells.keys.sample
       end
-          @player_board.cells[random_coords].fire_upon
-
-    #   puts @player_board.render(true)
-
+        @player_board.cells[random_coords].fire_upon
       computer_outcome = @player_board.cells[random_coords].render
       computer_shot_message = case computer_outcome
           when "M" then "was a miss."
@@ -235,7 +216,7 @@ class Game
  __..._____--==/___]_|__|_____________________________[___\==--____,------' .7
 |                                                                     BB-61/
  \_________________________________________________________________________|"
-        when "H" then "                 
+            when "H" then "                 
                                      |__
                                      |\/
                                      ---               _.__.  . .
@@ -249,7 +230,7 @@ class Game
  __..._____--==/___]_|__|_____#>-  @  -<#_______________[___\==--____,------' .7
 |                               / | | \                                 BB-61/
  \_________________________________________________________________________|"
-        when "X" then "                 
+            when "X" then "                 
                                      |__
                                      |\/
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -263,7 +244,7 @@ class Game
  __..._____->-  @  _<_|__|_____#>-  @  -<#_______#>-  @  -<#__\==--____,------' .7
 |            / | | \            / | | \           / | | \              BB-61/
  \_________________________________________________________________________|"
-        else ""
+            else ""
         end
         puts "#{shot_art} \n"
         puts "\n"
@@ -272,12 +253,12 @@ class Game
 
   def play_game
       until game_over?
-          turn_start
-          player_turn_shot
+        turn_start
+        player_turn_shot
       break if player_won?
-          computer_turn_shot
+        computer_turn_shot
       end
-      end_game
+    end_game
   end
 
   def game_over?
@@ -294,22 +275,22 @@ class Game
 
   def end_game
     if computer_won?
-         puts "I Won! #{@player_name}, would you like to play again? (yes or no) \n "
+        puts "\nI Won! #{@player_name}, would you like to play again? (yes or no) \n "
     else
-        puts "#{@player_name}, You Won! Would you like to play again? (yes or no) \n "
+        puts "\n#{@player_name}, You Won! Would you like to play again? (yes or no) \n "
     end
     choice = gets.chomp.downcase
-    case choice
-    when "yes"
-        run_game
-    when "no"
-        puts "Exciting game. Goodbye #{@player_name}"
-        exit
-    else
-        puts "Invalid choice. Please enter 'yes' to play again or 'no' to quit."
+        case choice
+        when "yes"
+            run_game
+        when "no"
+            puts "\nExciting game #{@player_name}! Goodbye. \n"
+            exit
+        else
+            puts "\nInvalid choice. Please enter 'yes' to play again or 'no' to quit. \n"
         end_game
     end
- end
+  end
 end                 
                      
        
