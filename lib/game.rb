@@ -98,19 +98,19 @@ class Game
   def player_turn_shot
         puts " \n Enter the coordinate for your shot: \n "
             user_input = gets.chomp.upcase 
-        # if @computer_board.valid_coordinate?(user_input) && !@computer_board.cells[user_input].fired_upon?
-        #     @computer_board.cells[user_input].fire_upon
-        # elsif @computer_board.valid_coordinate?(user_input)
-        #     puts "You have already fired here.  Enter a new coordinate:"
-        #     user_input = gets.chomp.upcase
-        # else
-        #     puts "Invalid placement. Enter a new coordinate:"
-        #     user_input = gets.chomp.upcase
-        # end
-        until @computer_board.valid_coordinate?(user_input) && !@computer_board.cells[user_input].fired_upon?
+        if @computer_board.valid_coordinate?(user_input) && !@computer_board.cells[user_input].fired_upon?
+            @computer_board.cells[user_input].fire_upon
+        elsif @computer_board.valid_coordinate?(user_input)
             puts "You have already fired here.  Enter a new coordinate:"
             user_input = gets.chomp.upcase
+        else
+            puts "Invalid placement. Enter a new coordinate:"
+            user_input = gets.chomp.upcase
         end
+        # until @computer_board.valid_coordinate?(user_input) && !@computer_board.cells[user_input].fired_upon?
+        #     puts "You have already fired here.  Enter a new coordinate:"
+        #     user_input = gets.chomp.upcase
+        # end
 
         #this could be put into a helper method and then on line 82.5 we call it
         #puts @computer_board.render
@@ -131,7 +131,7 @@ class Game
                             _/|     _/|-++'
                         +  +--|    |--|--|_ |-
                      { /|__|  |/\__|  |--- |||__/
-                    +---------------___[}-_===_.'____                 /\
+                    +---------------___[}-_===_.'____                 
 
  __..._____--==/___]_|__|_____________________________[___\==--____,------' .7
 |                                                                     BB-61/
@@ -139,35 +139,36 @@ class Game
         when "H" then "                 
                                      |__
                                      |\/
-                                     ---
-                                     / | [
-                              !      | |||
-                            _/|     _/|-++'
-                        +  +--|    |--|--|_ |-
-                     { /|__|  |/\__|  |--- |||__/
-                    +---------------___[}-_===_.'____                 /\
-
- __..._____--==/___]_|__|_____________________________[___\==--____,------' .7
-|                                                                     BB-61/
+                                     ---               _.__.  . .
+                                     / | [          +8#8+..``
+                              !      | |||     '.+#8##8#88#+-1`  '`   
+                            _/|     _/|-++' +**#8###8#88###``
+                        +  +--|    |--|-### |###88#=  ^""```
+                     { /|__|  |/\__|  +8#8#++#8#/       
+                    +--------------#+###+#_=#=_.'____                 
+                                #\>##+./#++   |
+ __..._____--==/___]_|__|_____#>-  @  -<#_______________[___\==--____,------' .7
+|                               / | | \                                 BB-61/
  \_________________________________________________________________________|"
         when "X" then "                 
                                      |__
                                      |\/
-                                     ---
-                                     / | [
-                              !      | |||
-                            _/|     _/|-++'
-                        +  +--|    |--|--|_ |-
-                     { /|__|  |/\__|  |--- |||__/
-                    +---------------___[}-_===_.'____                 /\
-
- __..._____--==/___]_|__|_____________________________[___\==--____,------' .7
-|                                                                     BB-61/
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                     / | [            .                 .
+           .         .         !      | |||         .
+                 .          _/|     _/|-++'                   .
+    .                   +  +--|    |--|--|_ |-              .
+     .               { /|__|  |/\__|  |--- |||__/
+        .           +---------------___[}-_===_.'____        .        
+                               #\>##+./#++   |   #\>##+./#++ .
+ __..._____->-  @  _<_|__|_____#>-  @  -<#_______#>-  @  -<#__\==--____,------' .7
+|            / | | \            / | | \           / | | \              BB-61/
  \_________________________________________________________________________|"
         else ""
       end
-      puts "#{shot_art}"
-      puts "Your shot on #{user_input} #{shot_message} \n "
+      puts "#{shot_art} \n"
+      puts "\n"
+      puts "==========================Your shot on #{user_input} #{shot_message}========================== \n "
   end
 
   def computer_turn_shot
@@ -194,7 +195,7 @@ class Game
                             _/|     _/|-++'
                         +  +--|    |--|--|_ |-
                      { /|__|  |/\__|  |--- |||__/
-                    +---------------___[}-_===_.'____                 /\
+                    +---------------___[}-_===_.'____                 
 
  __..._____--==/___]_|__|_____________________________[___\==--____,------' .7
 |                                                                     BB-61/
@@ -202,35 +203,36 @@ class Game
         when "H" then "                 
                                      |__
                                      |\/
-                                     ---
-                                     / | [
-                              !      | |||
-                            _/|     _/|-++'
-                        +  +--|    |--|--|_ |-
-                     { /|__|  |/\__|  |--- |||__/
-                    +---------------___[}-_===_.'____                 /\
-
- __..._____--==/___]_|__|_____________________________[___\==--____,------' .7
-|                                                                     BB-61/
+                                     ---               _.__.  . .
+                                     / | [          +8#8+..``
+                              !      | |||     '.+#8##8#88#+-1`  '`   
+                            _/|     _/|-++' +**#8###8#88###``
+                        +  +--|    |--|-### |###88#=  ^""```
+                     { /|__|  |/\__|  +8#8#++#8#/       
+                    +--------------#+###+#_=#=_.'____                 
+                                #\>##+./#++   |
+ __..._____--==/___]_|__|_____#>-  @  -<#_______________[___\==--____,------' .7
+|                               / | | \                                 BB-61/
  \_________________________________________________________________________|"
         when "X" then "                 
                                      |__
                                      |\/
-                                     ---
-                                     / | [
-                              !      | |||
-                            _/|     _/|-++'
-                        +  +--|    |--|--|_ |-
-                     { /|__|  |/\__|  |--- |||__/
-                    +---------------___[}-_===_.'____                 /\
-
- __..._____--==/___]_|__|_____________________________[___\==--____,------' .7
-|                                                                     BB-61/
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                     / | [            .                 .
+           .         .         !      | |||         .
+                 .          _/|     _/|-++'                   .
+    .                   +  +--|    |--|--|_ |-              .
+     .               { /|__|  |/\__|  |--- |||__/
+        .           +---------------___[}-_===_.'____        .        
+                               #\>##+./#++   |   #\>##+./#++ .
+ __..._____->-  @  _<_|__|_____#>-  @  -<#_______#>-  @  -<#__\==--____,------' .7
+|            / | | \            / | | \           / | | \              BB-61/
  \_________________________________________________________________________|"
         else ""
         end
-        puts "#{shot_art}"
-        puts "My shot on #{random_coords} #{computer_shot_message} \n "
+        puts "#{shot_art} \n"
+        puts "\n"
+        puts "==========================My shot on #{random_coords} #{computer_shot_message}==========================\n "
     end
 
   def play_game
