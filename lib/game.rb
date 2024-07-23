@@ -37,14 +37,17 @@ class Game
   def display_main_menu
     unless @name_asked
       puts "\n Please enter your name \n\n"
-      @player_name = gets.chomp.capitalize 
+
+ 
+
+      @player_name = gets.chomp.capitalize
+
       @name_asked = true
     end
       puts "\nGreetings, #{@player_name}, Welcome to BATTLESHIP \n "
       puts "My name is Joshua, shall we play a game? \n\n"
       puts "Enter 'yes' to play or 'no' to quit."
   end
-
    
   def run_game
       setup_game
@@ -78,11 +81,16 @@ class Game
         example = "(ie. A1, A2)"
     end
       show == 0 ? (puts @player_board.render) : (puts @player_board.render(true))
+
           puts " \n Enter the squares for the #{ship.name} (#{ship.length} spaces #{example}): \n "
-          user_input = gets.chomp.upcase.split(", ")
+      
+
+       
+          user_input = gets.chomp.upcase.gsub(",", " ").split
+
       until @player_board.valid_placement?(ship, user_input)
           puts "Invalid placement. Must be consecutive and not diagonal"
-          user_input = gets.chomp.upcase.split(", ")
+          user_input = gets.chomp.upcase.gsub(",", " ").split
       end
       @player_board.place_ship(ship, user_input)
       puts " \n Your #{ship.name} has been placed. \n "
@@ -96,23 +104,17 @@ class Game
   end
   
   def player_turn_shot
+
         puts " \n Enter the coordinate for your shot: \n "
             user_input = gets.chomp.upcase 
-        if @computer_board.valid_coordinate?(user_input) && !@computer_board.cells[user_input].fired_upon?
-            @computer_board.cells[user_input].fire_upon
-        elsif @computer_board.valid_coordinate?(user_input)
-            puts "You have already fired here.  Enter a new coordinate:"
-            user_input = gets.chomp.upcase
-        else
-            puts "Invalid placement. Enter a new coordinate:"
-            user_input = gets.chomp.upcase
-        end
-        # until @computer_board.valid_coordinate?(user_input) && !@computer_board.cells[user_input].fired_upon?
-        #     puts "You have already fired here.  Enter a new coordinate:"
-        #     user_input = gets.chomp.upcase
-        # end
+        until @computer_board.valid_coordinate?(user_input) && !@computer_board.cells[user_input].fired_upon?
+        #   puts "You have already fired here.  Enter a new coordinate:"
+        feedback_statement(user_input)
+          user_input = gets.chomp.upcase
+      end
 
         #this could be put into a helper method and then on line 82.5 we call it
+      @computer_board.cells[user_input].fire_upon
         #puts @computer_board.render
         outcome = @computer_board.cells[user_input].render
         shot_message = case outcome
@@ -165,10 +167,41 @@ class Game
 |            / | | \            / | | \           / | | \              BB-61/
  \_________________________________________________________________________|"
         else ""
+
+#       puts " \n Enter the coordinate for your shot: \n "
+#           user_input = gets.chomp.upcase
+#       until @computer_board.valid_coordinate?(user_input) && !@computer_board.cells[user_input].fired_upon?
+#         #   puts "You have already fired here.  Enter a new coordinate:"
+#         feedback_statement(user_input)
+#           user_input = gets.chomp.upcase
+#       end
+#       #this could be put into a helper method and then on line 82.5 we call it
+#           @computer_board.cells[user_input].fire_upon
+#     #   puts @computer_board.render
+#       outcome = @computer_board.cells[user_input].render
+#       shot_message = case outcome
+#       when "M" then "was a miss."
+#       when "H" then "scored a hit!"
+#       when "X" then "sunk my battleship!"
+#       else "Oh no, something has gone wrong"
+
       end
       puts "#{shot_art} \n"
       puts "\n"
       puts "==========================Your shot on #{user_input} #{shot_message}========================== \n "
+  end
+
+  def feedback_statement(input)
+    fired_upon_cells = @computer_board.cells.values.select {|cell| cell.fired_upon?}.map(&:coordinate)
+    if fired_upon_cells.include?(input)
+        puts "You have already fired here.  Enter a new coordinate:"
+    elsif input.length < 2
+        puts "This is invalid coordinate, please enter coordinate like B2"
+    elsif input[0].to_i > 0
+        puts "You must enter coordinate with letter first"
+    else @computer_board.valid_coordinate?(input) && !@computer_board.cells[input].fired_upon?
+        puts "This is invalid coordinate, please enter correct coordinate."
+    end
   end
 
   def computer_turn_shot
@@ -177,7 +210,9 @@ class Game
           random_coords = @player_board.cells.keys.sample
       end
           @player_board.cells[random_coords].fire_upon
-      #puts @player_board.render(true)
+
+    #   puts @player_board.render(true)
+
       computer_outcome = @player_board.cells[random_coords].render
       computer_shot_message = case computer_outcome
           when "M" then "was a miss."
@@ -257,7 +292,6 @@ class Game
     [@player_cruiser, @player_submarine].all?(&:sunk?)
   end
 
-
   def end_game
     if computer_won?
          puts "I Won! #{@player_name}, would you like to play again? (yes or no) \n "
@@ -276,4 +310,10 @@ class Game
         end_game
     end
  end
-end
+end                 
+                     
+       
+
+   
+                                
+                    
