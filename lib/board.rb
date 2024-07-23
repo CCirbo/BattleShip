@@ -23,7 +23,7 @@ class Board
    def valid_placement?(ship, coordinate_array)
       (ship.class == Ship && coordinate_array.class == Array) ?
             valid_length?(ship, coordinate_array) && 
-            valid_consecutive?(ship, coordinate_array) && 
+            valid_consecutive?(ship, coordinate_array) &&
             !(overlap?(coordinate_array)) : false
    end
 
