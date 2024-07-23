@@ -29,7 +29,7 @@ class Cell
   end
   
   def render(show_ship = false)
-    if @fired_upon
+    if fired_upon?
       return "M" if empty?
       return "X" if @ship.sunk?
       return "H" if !empty?
