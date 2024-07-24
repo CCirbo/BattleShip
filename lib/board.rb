@@ -17,38 +17,36 @@ class Board
   end
 
    def valid_coordinate?(coordinate)
-      @cells.has_key?(coordinate)
+     @cells.has_key?(coordinate)
    end
 
    def valid_placement?(ship, coordinate_array)
-      if ship.class == Ship && coordinate_array.class == Array
-        valid_coords =  coordinate_array.map do |coord|
-        valid_coordinate?(coord)
-      end
-     return false if valid_coords.include?(false) #needed to validate valid coord first
-        valid_length?(ship, coordinate_array) && valid_consecutive?(ship, coordinate_array) && !(overlap?(coordinate_array)) 
-      else
-        false
-      end
-
+       if ship.class == Ship && coordinate_array.class == Array
+          valid_coords =  coordinate_array.map do |coord|
+          valid_coordinate?(coord)
+       end
+       return false if valid_coords.include?(false) #needed to validate valid coord first
+          valid_length?(ship, coordinate_array) && valid_consecutive?(ship, coordinate_array) && !(overlap?(coordinate_array)) 
+       else
+          false
+       end
+    end
 #       (ship.class == Ship && coordinate_array.class == Array) ?
 #             valid_length?(ship, coordinate_array) && 
 #             valid_consecutive?(ship, coordinate_array) &&
 #             !(overlap?(coordinate_array)) : false
 
-   end
-
    def valid_length?(ship, coordinate_array)
-      coordinate_array.length == ship.length ? true : false
+     coordinate_array.length == ship.length ? true : false
    end
 
    def transform_coordinate_array(coordinate_array)
       numeric_coordinates = coordinate_array.map do |cell|
-        numeric = []
-        mid_output = cell.chars
-        numeric << mid_output[0].ord
-        numeric << mid_output[1].to_i
-       end
+      numeric = []
+      mid_output = cell.chars
+      numeric << mid_output[0].ord
+      numeric << mid_output[1].to_i
+      end
    end
 
    def valid_consecutive?(ship, coordinate_array)
@@ -62,27 +60,27 @@ class Board
    end
 
    def row_consecutive?(coordinates)
-      coordinates[0][0] == coordinates[1][0] && coordinates[0][1] + 1 == coordinates[1][1]
+     coordinates[0][0] == coordinates[1][0] && coordinates[0][1] + 1 == coordinates[1][1]
    end
 
    def column_consecutive?(coordinates)
-       coordinates[0][1] == coordinates[1][1] && coordinates[0][0] + 1 == coordinates[1][0]
+     coordinates[0][1] == coordinates[1][1] && coordinates[0][0] + 1 == coordinates[1][0]
    end 
 
    def three_in_a_row?(coordinates)
-      coordinates[0][0] == coordinates[1][0] && coordinates[1][0] == coordinates[2][0] &&
-      coordinates[0][1] + 1 == coordinates[1][1] && coordinates[1][1] + 1 == coordinates[2][1]
+     coordinates[0][0] == coordinates[1][0] && coordinates[1][0] == coordinates[2][0] &&
+     coordinates[0][1] + 1 == coordinates[1][1] && coordinates[1][1] + 1 == coordinates[2][1]
    end
 
    def three_in_a_column?(coordinates)
-      coordinates[0][1] == coordinates[1][1] && coordinates[1][1] == coordinates[2][1] &&
-      coordinates[0][0] + 1 == coordinates[1][0] && coordinates[1][0] + 1 == coordinates[2][0]
+     coordinates[0][1] == coordinates[1][1] && coordinates[1][1] == coordinates[2][1] &&
+     coordinates[0][0] + 1 == coordinates[1][0] && coordinates[1][0] + 1 == coordinates[2][0]
    end
 
    def place_ship(ship, coordinate_array)
        if overlap?(coordinate_array) == false
           coordinate_array.each do |coordinate|
-            @cells[coordinate].place_ship(ship)
+           @cells[coordinate].place_ship(ship)
         end
       end
    end

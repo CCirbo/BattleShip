@@ -38,6 +38,17 @@ RSpec.describe Board do
       expect(@board.valid_placement?(@submarine, ["A1", "A2"])).to eq (true)
       expect(@board.valid_placement?("WRONG ARG", 1738)).to eq (false)
     end
+
+    it 'can check if there is a valid horizontal placement' do
+      expect(@board.valid_placement?(@cruiser, ["A1", "A2", "A3"])).to eq(true)
+      expect(@board.valid_placement?(@cruiser, ["A1", "A2", "D7"])).to eq(false)
+      expect(@board.valid_placement?(@cruiser, ["A1", "A2", "B3"])).to eq(false)
+    end
+
+    it 'can check if there is a valid vertical placement' do
+      expect(@board.valid_placement?(@cruiser, ["A1", "B1", "C1"])).to eq(true)
+      expect(@board.valid_placement?(@cruiser, ["A3", "B2", "C3"])).to eq(false)
+    end
   end
 
   describe '#valid_length?()' do

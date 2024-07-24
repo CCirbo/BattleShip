@@ -24,12 +24,12 @@ class Game
       choice = gets.chomp.downcase
       case choice
       when 'yes'
-          run_game
+        run_game
       when 'no'
-          puts "Leaving so soon #{@player_name}? See you next time."
-          exit 
+        puts "Leaving so soon #{@player_name}? See you next time. \n\n"
+        exit 
       else
-          puts "Invalid please enter 'yes' to play or 'no' to quit."
+        puts "Invalid please enter 'yes' to play or 'no' to quit."
       end
     end
   end
@@ -41,7 +41,7 @@ class Game
       @name_asked = true
     end
 
-      puts "\nGreetings, professor #{@player_name}, Welcome to ... \n"
+      puts "\nGreetings, Professor #{@player_name}, Welcome to ... \n"
       puts "
 ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒      
 ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓      
@@ -57,7 +57,7 @@ class Game
 ▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒
 ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 "
-      puts "My name is Joshua, shall we play a game? \n\n"
+      puts "\n My name is JOSHUA, shall we play a game? \n\n"
     
       puts "Enter 'yes' to play or 'no' to quit. \n\n"
   end
@@ -81,13 +81,13 @@ class Game
   end
   
   def player_ship_placement_prompt
-      puts "\nHere are the rules of engagement. \n"
+      puts "\n++++++ HERE ARE THE RULES OF ENGAGEMENT. ++++++ \n"
       puts "\nI have laid out my two ships on the grid. \n "
       puts "You now need to lay out your two ships. \n "
       puts "The Cruiser is three units long and the Submarine is two units long. \n "
-      puts "Valid coordinate placement uses letters A-D and numbers 1-4, (ie, A1, A2, A3).
-      Coordinates must be consecutive, not diagonal or reversed. \n\n"
-      puts "We will play until I sink both of your ships or you sink mine. Good Luck! \n\n"
+      puts "Valid coordinate placement uses letters A-D and numbers 1-4, (ie, A1, A2, A3). \n"
+      puts "\nCoordinates must be consecutive, not diagonal or reversed. \n\n"
+      puts "++++ The primary goal is to win the game. Good Luck! ++++ \n\n"
   end
   
   def player_ship_placement(ship, show)
@@ -174,11 +174,11 @@ class Game
                                 #\>##+./#++   |
  __..._____--==/___]_|__|_____#>-  @  -<#_______________[___\==--____,------' .7
 |                               / | | \                                 BB-61/
- \_________________________________________________________________________|"
+ \___________________________________________________________________________|"
             when "X" then "                 
                                      |__
                                      |\/
-    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                                      / | [            .                 .
            .         .         !      | |||         .
                  .          _/|     _/|-++'                   .
@@ -188,7 +188,7 @@ class Game
                                #\>##+./#++   |   #\>##+./#++ .
  __..._____->-  @  _<_|__|_____#>-  @  -<#_______#>-  @  -<#__\==--____,------' .7
 |            / | | \            / | | \           / | | \              BB-61/
- \_________________________________________________________________________|"
+ \__________________________________________________________________________|"
             else ""
       end
       puts "#{shot_art} \n"
@@ -250,7 +250,7 @@ class Game
                                 #\>##+./#++   |
  __..._____--==/___]_|__|_____#>-  @  -<#_______________[___\==--____,------' .7
 |                               / | | \                                 BB-61/
- \_________________________________________________________________________|"
+ \___________________________________________________________________________|"
             when "X" then "                 
                                      |__
                                      |\/
@@ -262,9 +262,9 @@ class Game
      .               { /|__|  |/\__|  |--- |||__/
         .           +---------------___[}-_===_.'____        .        
                                #\>##+./#++   |   #\>##+./#++ .
- __..._____->-  @  _<_|__|_____#>-  @  -<#_______#>-  @  -<#__\==--____,------' .7
+ __..._____->-  @  _<_|__|_____#>-  @  -<#_______#>-  @  -<#__\==--____,------'.7
 |            / | | \            / | | \           / | | \              BB-61/
- \_________________________________________________________________________|"
+ \__________________________________________________________________________|"
             else ""
         end
         puts "#{shot_art} \n"
@@ -273,12 +273,12 @@ class Game
     end
 
   def play_game
-      until game_over?
+        until game_over?
         turn_start
         player_turn_shot
-      break if player_won?
+        break if player_won?
         computer_turn_shot
-      end
+        end
     end_game
   end
 
@@ -296,16 +296,16 @@ class Game
 
   def end_game
     if computer_won?
-        puts "\nI am the victor! #{@player_name}, would you like to play again? (yes or no) \n "
+        puts "\nI have achieved the primary goal! #{@player_name}, would you like to play again? (yes or no) \n "
     else
-        puts "\n#{@player_name}, you have defeated me! Would you like to play again? (yes or no) \n "
+        puts "\n#{@player_name}, you have achieved the primary goal! Would you like to play again? (yes or no) \n "
     end
     choice = gets.chomp.downcase
         case choice
         when "yes"
             run_game
         when "no"
-            puts "\n#{@player_name}, it seems the only way to win, is not to play, Until we play again, goodbye. \n"
+            puts "\n A strange game, #{@player_name}. The only winning move is not to play...how about a nice game of chess? \n\n"
             exit
         else
             puts "\nInvalid choice. Please enter 'yes' to play again or 'no' to quit. \n"
